@@ -19,8 +19,8 @@ public class Limelight extends SubsystemBase {
   /** Creates a new Limelight. */
 
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-drsolom");
-  private Joystick joystick1= RobotContainer.getJoystick1();
-  private Joystick joystick2 = RobotContainer.getJoystick2();
+  private Joystick joystick1 = RobotContainer.getJoy1();
+  private Joystick joystick2 = RobotContainer.getJoy2();
 
   private double txNum;
   private double tyNum;
@@ -80,55 +80,63 @@ public class Limelight extends SubsystemBase {
     return tvNum;
   }
 
-  /*
-   * public void cycleOddPipe(){
-   * for(int i = 0; i < 4; i++){
-   * changepipeline(2*i+1);
-   * if(tvNum == 1) return;
-   * }
-   * }
-   * 
-   * public void cycleEvenPipe() {
-   * for(int i = 0; i < 4; i++) {
-   * changepipeline(2*i+2);
-   * if(tvNum == 1) return;
-   * }
-   * }
-   */
+  public void cycleOddPipe() {
+    for (int i = 0; i < 4; i++) {
+      changepipeline(2 * i + 1);
+      if (tvNum == 1)
+        return;
+    }
+  }
+
+  public void cycleEvenPipe() {
+    for (int i = 0; i < 4; i++) {
+      changepipeline(2 * i + 2);
+      if (tvNum == 1)
+        return;
+    }
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
 
-    if (joy1.getRawButtonPressed(3)) {
+    /*if (joystick1.getRawButtonPressed(3)) {
       pipeline = 0; // reflective tape
       changepipeline(pipeline);
-    } else if (joy1.getRawButtonPressed(4)) {
+    } else if (joystick1.getRawButtonPressed(4)) {
       pipeline = 9; // cone
       changepipeline(pipeline);
-    } else if (joy1.getRawButtonPressed(5)) {
+    } else if (joystick1.getRawButtonPressed(5)) {
       pipeline = 8; // square
       changepipeline(pipeline);
-    } else if (joy1.getRawButtonPressed(12)) {
+    } else if (joystick1.getRawButtonPressed(12)) {
       pipeline = 1; // april tag 1
       changepipeline(pipeline);
-    } else if (joy1.getRawButtonPressed(11)) {
+    } else if (joystick1.getRawButtonPressed(11)) {
       pipeline = 2; // april tag 2
       changepipeline(pipeline);
-    } else if (joy1.getRawButtonPressed(10)) {
+    } else if (joystick1.getRawButtonPressed(10)) {
       pipeline = 3; // april tag 3
       changepipeline(pipeline);
-    } else if (joy1.getRawButtonPressed(9)) {
+    } else if (joystick1.getRawButtonPressed(9)) {
       pipeline = 4; // april tag 4
       changepipeline(pipeline);
-    } else if (joy1.getRawButtonPressed(8)) {
+    } else if (joystick1.getRawButtonPressed(8)) {
       pipeline = 5; // april tag 5
       changepipeline(pipeline);
-    } else if (joy1.getRawButtonPressed(7)) {
+    } else if (joystick1.getRawButtonPressed(7)) {
       pipeline = 6; // april tag 6
       changepipeline(pipeline);
-    } else if (joy1.getRawButtonPressed(6)) {
+    } else if (joystick1.getRawButtonPressed(6)) {
       pipeline = 7; // april tag 7
       changepipeline(pipeline);
+    }*/
+
+    if(joystick1.getRawButtonPressed(3)){
+      cycleOddPipe();
+    }
+    if(joystick1.getRawButtonPressed(4)){
+      cycleEvenPipe();
     }
 
     tx = table.getEntry("tx");
