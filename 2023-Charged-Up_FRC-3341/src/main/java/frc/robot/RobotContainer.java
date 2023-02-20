@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.CenterToTarget;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TankDrive;
@@ -25,7 +24,6 @@ public class RobotContainer {
   private static DriveTrain dt;
   private static CenterToTarget center;
 
-  ArcadeDrive arcade;
   
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -41,10 +39,8 @@ public class RobotContainer {
     lime = new Limelight();
     center = new CenterToTarget(lime, dt);
     tankDrive = new TankDrive(dt, joystick1, joystick2);
-    arcade = new ArcadeDrive(dt, joystick1);
     
     lime.setDefaultCommand(center);
-    dt.setDefaultCommand(arcade);
   }
   public static Joystick getJoy1() {
     return joystick1;

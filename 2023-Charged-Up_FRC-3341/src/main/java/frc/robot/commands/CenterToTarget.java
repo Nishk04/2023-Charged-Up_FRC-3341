@@ -8,7 +8,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.networktables.NetworkTable;
@@ -25,19 +29,23 @@ public class CenterToTarget extends CommandBase {
   public double centerx;
   public double centery;
   private final TankDrive tankDrive;
-  private static DriveTrain dt;
+  private static DriveTrain drive;
   public PIDController pid;
+  double speed = 0.0;
+  
+  
 
-  public CenterToTarget(Limelight lime, DriveTrain dt) {
+  public CenterToTarget(Limelight lime, DriveTrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
-    tankDrive = new TankDrive(dt, null, null);
+    tankDrive = new TankDrive(drive, null, null);
     this.lime = lime;
-    this.dt = dt;
+    this.drive = drive;
     // Connects limelight subsystem to this command
-    addRequirements(dt, lime);
+    addRequirements(drive, lime);
     centerx = lime.get_tx();
     centery = lime.get_ty();
-    pid = new PIDController(0.01, 0.0003, 0.001);
+    pid = new PIDController(0.0093825*2, 0.0, 0.0);
+    pid.setTolerance(1);
   }
 
   // Called when the command is initially scheduled.
@@ -45,8 +53,10 @@ public class CenterToTarget extends CommandBase {
   public void initialize() {
     centerx = lime.get_tx();
     centery = lime.get_ty();
-    dt.resetEncoders();
-    pid.setSetpoint(0);
+    drive.resetEncoders();
+    pid.setSetpoint(0.0);
+    
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -56,29 +66,30 @@ public class CenterToTarget extends CommandBase {
     // the robot is moving
     centerx = lime.get_tx();
     centery = lime.get_ty();
-    // IMPORTANT - The screen of limelight it works with negatives(left side of 0)
-    // and positives(right side of 0)
-    if (RobotContainer.getJoy1().getRawButton(2)) {
-      if (lime.get_tv() == 1) {
-        if (lime.get_tx() >= 1) {
-          dt.tankDrive(-0.2, 0.2);
-        }
-        if (lime.get_tx() <= -1) {
-          dt.tankDrive(0.2, -0.2);
-        }
-      }
+    speed = pid.calculate(centerx);
+
+    if(Math.abs(speed) > 0.6){
+      speed = Math.abs(0.6)*(Math.abs(speed)/speed);
+    } else if(Math.abs(speed) < 0.15){
+      speed = Math.abs(0.15)*(Math.abs(speed)/speed);
     }
+      drive.tankDrive(speed, -speed);
+    
+      SmartDashboard.putNumber("Speed", speed);
+
   }
+  
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    drive.tankDrive(0.0, 0.0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //return pid.atSetpoint();
     return false;
   }
 }
