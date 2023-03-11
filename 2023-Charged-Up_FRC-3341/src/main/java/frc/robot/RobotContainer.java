@@ -12,6 +12,7 @@ import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Limelight2;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -21,6 +22,7 @@ public class RobotContainer {
   public static Joystick joystick1;
   private static TankDrive tankDrive;
   private static Limelight lime;
+  private static Limelight2 lime2;
   private static DriveTrain dt;
   private static CenterToTarget center;
 
@@ -37,6 +39,7 @@ public class RobotContainer {
     // Configure the button bindings
     dt = new DriveTrain();
     lime = new Limelight();
+    lime2 = new Limelight2();
     center = new CenterToTarget(lime, dt);
     tankDrive = new TankDrive(dt, joystick1, joystick2);
     

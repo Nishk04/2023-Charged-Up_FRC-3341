@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -36,9 +38,7 @@ public class RaspberryPi extends SubsystemBase {
     camera.setPipelineIndex(0);
     PortForwarder.add(5800,"photonvision.local", 5800);
   }
-  public void changepipeline(int pipeline){
-    .getEntry("pipeline").setNumber(pipeline);
-  }
+  
   public boolean targetExists() {
     return hasTarget;
   }
