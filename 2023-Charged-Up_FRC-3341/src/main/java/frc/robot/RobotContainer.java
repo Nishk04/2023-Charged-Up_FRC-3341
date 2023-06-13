@@ -61,7 +61,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    JoystickButton centerButton = new JoystickButton(joystick1, 3); //Y button on xbox constroller
+    centerButton.onTrue(center);
+  }
 
 
   /**

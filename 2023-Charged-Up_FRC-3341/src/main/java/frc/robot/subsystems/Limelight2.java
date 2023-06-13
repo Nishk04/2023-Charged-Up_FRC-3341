@@ -59,17 +59,46 @@ public class Limelight2 extends SubsystemBase {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("Stream").setNumber(2);
 
   }
-  
-  public void changepipeline(int pipeline2){ table.getEntry("pipeline2").setNumber(pipeline2); }
-  public static double get_tx2(){ return txNum2; }
-  public static double get_ty2(){ return tyNum2; }
-  public double get_ta2(){ return taNum2; }
-  public static int get_tv2(){ return tvNum2; }
-  public static double getCloseReflectiveTapeDistance2(){ return CloseReflectiveTapeDistance2; }
-  public static double getFarReflectiveTapeDistance2(){ return FarReflectiveTapeDistance2; }
-  public static double getCloseAprilTagDistance2(){ return CloseAprilTagDistance2; }
-  public static double getFarAprilTagDistance2(){ return FarAprilTagDistance2; }
-  public static double getDistance_Test2(){ return Distance_Test2; }
+
+  public void changepipeline(int pipeline2) {
+    table.getEntry("pipeline").setNumber(pipeline2);
+  }
+
+  public static double get_tx2() {
+    return txNum2;
+  }
+
+  public static double get_ty2() {
+    return tyNum2;
+  }
+
+  public double get_ta2() {
+    return taNum2;
+  }
+
+  public static int get_tv2() {
+    return tvNum2;
+  }
+
+  public static double getCloseReflectiveTapeDistance2() {
+    return CloseReflectiveTapeDistance2;
+  }
+
+  public static double getFarReflectiveTapeDistance2() {
+    return FarReflectiveTapeDistance2;
+  }
+
+  public static double getCloseAprilTagDistance2() {
+    return CloseAprilTagDistance2;
+  }
+
+  public static double getFarAprilTagDistance2() {
+    return FarAprilTagDistance2;
+  }
+
+  public static double getDistance_Test2() {
+    return Distance_Test2;
+  }
 
   @Override
   public void periodic() {
@@ -101,8 +130,8 @@ public class Limelight2 extends SubsystemBase {
     } else if (joystick1.getRawButtonPressed(11)) {
       pipeline2 = 6; // april tag 6
       changepipeline(pipeline2);
-    } 
-// 1st (closest) reflective tape pole
+    }
+    // 1st (closest) reflective tape pole
     double pole_1_targetOffsetAngle_Vertical2 = ty2.getDouble(0.0);
     // How many degrees back is your limelight rotated from perfectly vertical?
     double pole_1_limelightMountAngleDegrees2 = 3.15;
@@ -114,48 +143,52 @@ public class Limelight2 extends SubsystemBase {
     // Converts degrees to radians
     double pole_1_angleToGoalRadians2 = pole_1_angleToGoalDegrees2 * (Math.PI / 180.0);
     // Calculates distance
-    CloseReflectiveTapeDistance2 = (pole_1_goalHeightInches2 - pole_1_limelightLensHeightInches2)/Math.tan(pole_1_angleToGoalRadians2);
+    CloseReflectiveTapeDistance2 = (pole_1_goalHeightInches2 - pole_1_limelightLensHeightInches2)
+        / Math.tan(pole_1_angleToGoalRadians2);
     // This outputs the distance from the limelight to the target
     SmartDashboard.putNumber("CloseReflectiveTapeDistance2 (inches)", CloseReflectiveTapeDistance2);
 
-// 2nd (farthest) reflective tape pole
+    // 2nd (farthest) reflective tape pole
     double pole_2_targetOffsetAngle_Vertical2 = ty2.getDouble(0.0);
-    double pole_2_limelightMountAngleDegrees2 = 3.15; 
+    double pole_2_limelightMountAngleDegrees2 = 3.15;
     double pole_2_limelightLensHeightInches2 = 7.165354;
     double pole_2_goalHeightInches2 = 46;
     double pole_2_angleToGoalDegrees2 = pole_2_limelightMountAngleDegrees2 + pole_2_targetOffsetAngle_Vertical2;
     double pole_2_angleToGoalRadians2 = pole_2_angleToGoalDegrees2 * (Math.PI / 180.0);
-    FarReflectiveTapeDistance2 = (pole_2_goalHeightInches2 - pole_2_limelightLensHeightInches2)/Math.tan(pole_2_angleToGoalRadians2);
+    FarReflectiveTapeDistance2 = (pole_2_goalHeightInches2 - pole_2_limelightLensHeightInches2)
+        / Math.tan(pole_2_angleToGoalRadians2);
     SmartDashboard.putNumber("FarReflectiveTapeDistance2 (inches)", FarReflectiveTapeDistance2);
 
-// 3rd (closest) april tag shelf
+    // 3rd (closest) april tag shelf
     double pole_3_targetOffsetAngle_Vertical2 = ty2.getDouble(0.0);
     double pole_3_limelightMountAngleDegrees2 = 3.15;
     double pole_3_limelightLensHeightInches2 = 7.165354;
     double pole_3_goalHeightInches2 = 23.5;
     double pole_3_angleToGoalDegrees2 = pole_3_limelightMountAngleDegrees2 + pole_3_targetOffsetAngle_Vertical2;
     double pole_3_angleToGoalRadians2 = pole_3_angleToGoalDegrees2 * (Math.PI / 180.0);
-    CloseAprilTagDistance2 = (pole_3_goalHeightInches2 - pole_3_limelightLensHeightInches2)/Math.tan(pole_3_angleToGoalRadians2);
+    CloseAprilTagDistance2 = (pole_3_goalHeightInches2 - pole_3_limelightLensHeightInches2)
+        / Math.tan(pole_3_angleToGoalRadians2);
     SmartDashboard.putNumber("CloseAprilTagDistance2 (inches)", CloseAprilTagDistance2);
 
-// 4th (farthest) april tag shelf
+    // 4th (farthest) april tag shelf
     double pole_4_targetOffsetAngle_Vertical2 = ty2.getDouble(0.0);
-    double pole_4_limelightMountAngleDegrees2 = 3.15; 
+    double pole_4_limelightMountAngleDegrees2 = 3.15;
     double pole_4_limelightLensHeightInches2 = 7.165354;
     double pole_4_goalHeightInches2 = 35.5;
     double pole_4_angleToGoalDegrees2 = pole_4_limelightMountAngleDegrees2 + pole_4_targetOffsetAngle_Vertical2;
     double pole_4_angleToGoalRadians2 = pole_4_angleToGoalDegrees2 * (Math.PI / 180.0);
-    FarAprilTagDistance2 = (pole_4_goalHeightInches2 - pole_4_limelightLensHeightInches2)/Math.tan(pole_4_angleToGoalRadians2);
+    FarAprilTagDistance2 = (pole_4_goalHeightInches2 - pole_4_limelightLensHeightInches2)
+        / Math.tan(pole_4_angleToGoalRadians2);
     SmartDashboard.putNumber("FarAprilTagDistance2 (inches)", FarAprilTagDistance2);
 
-// test
+    // test
     double test_targetOffsetAngle_Vertical2 = ty2.getDouble(0.0);
     double test_limelightMountAngleDegrees2 = 3.15;
     double test_limelightLensHeightInches2 = 7.165354;
     double test_goalHeightInches2 = 15;
     double test_angleToGoalDegrees2 = test_limelightMountAngleDegrees2 + test_targetOffsetAngle_Vertical2;
     double test_angleToGoalRadians2 = test_angleToGoalDegrees2 * (Math.PI / 180.0);
-    Distance_Test2 = (test_goalHeightInches2 - test_limelightLensHeightInches2)/Math.tan(test_angleToGoalRadians2);
+    Distance_Test2 = (test_goalHeightInches2 - test_limelightLensHeightInches2) / Math.tan(test_angleToGoalRadians2);
     SmartDashboard.putNumber("Distance_Test2 (inches)", Distance_Test2);
 
     tx2 = table.getEntry("tx2");
@@ -167,10 +200,12 @@ public class Limelight2 extends SubsystemBase {
     // We will be assigning tvNum to the int (1 or 0) that limelight returns
     tvNum2 = (int) tv2.getDouble(0.0);
 
-    // We will be assigning tyNum to the double (-27.0 to 27.0) that limelight returns
+    // We will be assigning tyNum to the double (-27.0 to 27.0) that limelight
+    // returns
     txNum2 = tx2.getDouble(0.0);
 
-    // We will be assigning tyNum to the double (-20.5 to 20.5) that limelight returns
+    // We will be assigning tyNum to the double (-20.5 to 20.5) that limelight
+    // returns
     tyNum2 = ty2.getDouble(0.0);
 
     // We will be assigning taNum to the double (0.0-100.0) that limelight returns
@@ -188,14 +223,14 @@ public class Limelight2 extends SubsystemBase {
     // This will output the value of the target in SmartDashboard (0 or 1)
     SmartDashboard.putNumber("LimelightV2", tvNum2);
 
-    // SmartDashboard.putNumber("PipelineNumber", pipeline);
-    // Actual pipeline number not representative
-    SmartDashboard.putNumber("PipelineName2", table.getEntry("pipeline2").getDouble(0));// Actual piepline
-
+   
     NetworkTableInstance.getDefault().getTable("limelight2").getEntry("tx").getDouble(0);
     NetworkTableInstance.getDefault().getTable("limelight2").getEntry("ty").getDouble(0);
     NetworkTableInstance.getDefault().getTable("limelight2").getEntry("tv").getDouble(0);
     NetworkTableInstance.getDefault().getTable("limelight2").getEntry("ta").getDouble(0);
-    
+ // SmartDashboard.putNumber("PipelineNumber", pipeline);
+    // Actual pipeline number not representative
+    SmartDashboard.putNumber("PipelineName2", table.getEntry("pipeline2").getInteger(0));// Actual piepline
+
   }
 }
